@@ -1,0 +1,57 @@
+{
+	"id": "f007c150-bb43-454d-95ed-becc0d00b5c8",
+	"name": "env-sun",
+	"values": [
+		{
+			"key": "baseURL",
+			"value": "https://env-sun.portnov.com",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "APIkey",
+			"value": "Cf8/RskOirwu4mVM5fi9SDfL8aETIM4VbgRSn7nZy04= ",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "guestToken",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "GuestAccessToken",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "GuestRefreshToken",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "productId",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "categoryId",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "updAPIkey",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		}
+	],
+	"_postman_variable_scope": "environment",
+	"_postman_exported_at": "2023-11-17T04:06:35.128Z",
+	"_postman_exported_using": "Postman/10.20.0"
+}

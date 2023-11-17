@@ -1,0 +1,285 @@
+{
+	"info": {
+		"_postman_id": "046054b9-dc46-457c-a81e-97c0200985ac",
+		"name": "PublicRegistrationForm",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26554676",
+		"_collection_link": "https://dark-resonance-591950.postman.co/workspace/nopCommerce~bc84a212-ffe9-4443-b100-3ebd088082d3/collection/26554676-046054b9-dc46-457c-a81e-97c0200985ac?action=share&source=collection_link&creator=26554676"
+	},
+	"item": [
+		{
+			"name": "GET Ping to check API Server Status",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Pin to check the API server status - Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"var jsonData = pm.response.json();\r",
+							"console.log(\"Guest Gegistration Form Validation. The full version is \" + jsonData.FullVersion);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/api/PublicGeneral/Ping",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"api",
+						"PublicGeneral",
+						"Ping"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Public Guest Token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Public Guest Token - Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.environment.set(\"GuestAccessToken\", pm.response.json().AccessToken);\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "{{APIkey}}",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "X-API-KEY",
+							"type": "string"
+						},
+						{
+							"key": "in",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/api/PublicCustomer/GetGuestToken",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"api",
+						"PublicCustomer",
+						"GetGuestToken"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Guest GET Register Form Validation",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Guest can Get Register Form - Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check if Email is null\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.Email).to.eql(null);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Entering Email Twice is False\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.EnteringEmailTwice).to.eql(false);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Confirm Email is Null\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.ConfirmEmail).to.eql(null);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Username is Not Enabled\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.UsernamesEnabled).to.eql(false);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Username Availability is Disabled\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.CheckUsernameAvailabilityEnabled).to.eql(false);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Password is Null\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.Password).to.eql(null);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Confirm Password is Null\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.ConfirmPassword).to.eql(null);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Gender is Enabled\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.GenderEnabled).to.eql(true);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Gender is Null\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.Gender).to.eql(null);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"First Name is Enabled\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.FirstNameEnabled).to.eql(true);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"First Name is Null\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.FirstName).to.eql(null);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"First Name is Required\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.FirstNameRequired).to.eql(true);\r",
+							"});\r",
+							"pm.test(\"Last Name is Enabled\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.LastNameEnabled).to.eql(true);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Last name is Null\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.LastName).to.eql(null);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Last Name is Required\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.LastNameEnabled).to.eql(true);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Date of Birth is Enabled \", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.DateOfBirthEnabled).to.eql(true);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Date of Birth is Not Required\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.DateOfBirthRequired).to.eql(false);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Company is Enabled\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.CompanyEnabled).to.eql(true);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Company is Not Required\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.CompanyRequired).to.eql(false);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Street Address is Disabled\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.StreetAddressEnabled).to.eql(false);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Street Address is Not Required\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.StreetAddressRequired).to.eql(false);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Street Address 2 is Disabled\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.StreetAddress2Enabled).to.eql(false);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Street Address 2 is Not Required\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.StreetAddress2Required).to.eql(false);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Zip Postal Code is Disabled\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.ZipPostalCodeEnabled).to.eql(false);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Zip Postal Code is Not Required\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.ZipPostalCodeRequired).to.eql(false);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"City is Disabled\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.CityEnabled).to.eql(false);\r",
+							"});\r",
+							"pm.test(\"City is Not Required\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.CityRequired).to.eql(false);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"County is Disabled\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.CountyEnabled).to.eql(false);\r",
+							"});\r",
+							"pm.test(\"County is Not Required\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.CountyRequired).to.eql(false);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Country is Disabled\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.CountryEnabled).to.eql(false);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Country is Not Required\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.CountryRequired).to.eql(false);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/api/PublicCustomer/GetRegister",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"api",
+						"PublicCustomer",
+						"GetRegister"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

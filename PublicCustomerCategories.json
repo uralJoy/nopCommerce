@@ -1,0 +1,299 @@
+{
+	"info": {
+		"_postman_id": "8eec63f5-cc9d-49da-b405-5b05b9754a12",
+		"name": "PublicCustomerCategories",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26554676",
+		"_collection_link": "https://dark-resonance-591950.postman.co/workspace/nopCommerce~bc84a212-ffe9-4443-b100-3ebd088082d3/collection/26554676-8eec63f5-cc9d-49da-b405-5b05b9754a12?action=share&source=collection_link&creator=26554676"
+	},
+	"item": [
+		{
+			"name": "GET Ping to check API Server Status",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Pin to check the API server status - Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"var jsonData = pm.response.json();\r",
+							"console.log(\"Public Page Categories Validation. The full version is \" + jsonData.FullVersion);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/api/PublicGeneral/Ping",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"api",
+						"PublicGeneral",
+						"Ping"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Public Guest Token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Public Guest Token - Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.environment.set(\"GuestAccessToken\", pm.response.json().AccessToken);\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "{{APIkey}}",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "X-API-KEY",
+							"type": "string"
+						},
+						{
+							"key": "in",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/api/PublicCustomer/GetGuestToken",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"api",
+						"PublicCustomer",
+						"GetGuestToken"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET - Products Home Page",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Get Products to be displayed on home page - Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"var jsonData = pm.response.json();\r",
+							"console.log(jsonData.length);\r",
+							"var lastProduct = jsonData[jsonData.length - 1];\r",
+							"pm.test(\"Check last product name is Apple MacBook Pro 13-inch\", function(){\r",
+							"    pm.expect(lastProduct.Name).to.eql(\"FINAL SALE!!!! Apple MacBook Pro 13-inch\")\r",
+							"})\r",
+							"pm.test(\"Check product Sku is AP_MBP_13\", function(){\r",
+							"    pm.expect(lastProduct.Sku).to.eql(\"AP_MBP_13\")\r",
+							"})\r",
+							"pm.environment.set(\"productId\", pm.response.json()[jsonData.length - 1].Id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/api/PublicProduct/GetHomepageProducts",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"api",
+						"PublicProduct",
+						"GetHomepageProducts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Guest List of Public Categories",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Gest Views List of Categories - Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"var jsonData = pm.response.json();\r",
+							"console.log(\"The number of Categories on the Home Page is : \" + jsonData.length);\r",
+							"var lastCategory = jsonData[jsonData.length - 1];\r",
+							"pm.test(\"Check last category is Digital Downloads\", function(){\r",
+							"    pm.expect(lastCategory.Name).to.eql(\"Digital downloads\")\r",
+							"})\r",
+							"pm.test(\"Check last Category description is null\", function(){\r",
+							"    pm.expect(lastCategory.Description).to.eql(null)\r",
+							"})\r",
+							"pm.environment.set(\"categoryId\", pm.response.json()[jsonData.length - 1].Id);\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "{{APIkey}}",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "X-API-KEY",
+							"type": "string"
+						},
+						{
+							"key": "in",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"UsernameOrEmail\": \"api@email.com\",\r\n  \"Password\": \"abc123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/api/PublicCategory/GetHomepageCategories",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"api",
+						"PublicCategory",
+						"GetHomepageCategories"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Guest Views Last Category From the Home Page",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Guest Views The Last Category From the Home Page - Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Name of the last Category from the Home page was Digital downloads\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.Name).to.eql(\"Digital downloads\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/api/PublicCategory/GetCategory/{{categoryId}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"api",
+						"PublicCategory",
+						"GetCategory",
+						"{{categoryId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Full List of Categories Top Menu",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Guest. Full list of Categories in the top Menu - Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/api/PublicCategory/GetTopMenu",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"api",
+						"PublicCategory",
+						"GetTopMenu"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

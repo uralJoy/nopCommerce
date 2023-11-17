@@ -1,0 +1,313 @@
+{
+	"info": {
+		"_postman_id": "6e837819-0226-45a2-adb1-21ab7c1aee0e",
+		"name": "PublicProduct",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26554676",
+		"_collection_link": "https://dark-resonance-591950.postman.co/workspace/nopCommerce~bc84a212-ffe9-4443-b100-3ebd088082d3/collection/26554676-6e837819-0226-45a2-adb1-21ab7c1aee0e?action=share&source=collection_link&creator=26554676"
+	},
+	"item": [
+		{
+			"name": "GET Ping to check API Server Status",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Pin to check the API server status - Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"var jsonData = pm.response.json();\r",
+							"console.log(\"Public Product Validation collection. The full version is \" + jsonData.FullVersion);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/api/PublicGeneral/Ping",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"api",
+						"PublicGeneral",
+						"Ping"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET - Products Home Page",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Get Products to be displayed on home page - Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Get Products to be displayed on home page - Response time is less than 200ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+							"});\r",
+							"var jsonData = pm.response.json();\r",
+							"var firstName = jsonData[0];\r",
+							"pm.test(\"The first product on the Home Page is - Build your own computer\", function(){\r",
+							"pm.expect(firstName.Name).to.eql(\"Build your own computer\")\r",
+							"}\r",
+							")\r",
+							"\r",
+							"var jsonData = pm.response.json();\r",
+							"var lastName = jsonData[jsonData.length - 1];\r",
+							"pm.test(\"The last product on the Home Page is FINAL SALE!!!! Apple MacBook Pro 13-inch\", function(){\r",
+							"pm.expect(lastName.Name).to.eql(\"FINAL SALE!!!! Apple MacBook Pro 13-inch\")\r",
+							"}\r",
+							")\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/api/PublicProduct/GetHomepageProducts",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"api",
+						"PublicProduct",
+						"GetHomepageProducts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Best Selling Products",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Bestsellers Setting is disabled \", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"var jsonData = pm.response.json();\r",
+							"console.log(\"The Errors message is : \" + jsonData.Errors);\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/api/PublicProduct/GetBestSellers",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"api",
+						"PublicProduct",
+						"GetBestSellers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Product Id=1 Details",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Get Product Details - Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Name is Build Your Own Computer\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.Name).to.eql(\"Build your own computer\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify the Shippment is Enabled\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.IsShipEnabled).to.eql(true);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/api/PublicProduct/GetProductDetails/1",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"api",
+						"PublicProduct",
+						"GetProductDetails",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Product id=1 Review",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify the Get Product Review Request - Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Check That Customers Can Add New Review\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.AddProductReview.CanAddNewReview).to.eql(true);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"\r",
+							"// var obj = jsonData[jsonData.length -1];\r",
+							"// console.log(obj);\r",
+							"// if (obj.name == \"OctQuiz\") {\r",
+							"//     console.log(\"The name is OctQuiz\");\r",
+							"// } else {\r",
+							"//     console.log(\"The name is not OctQuiz\");\r",
+							"// }"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/api/PublicProduct/GetProductReviews/1",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"api",
+						"PublicProduct",
+						"GetProductReviews",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET New Products List",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Get New Products List - Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"var jsonData = pm.response.json();\r",
+							"console.log(\"The total number of new products is : \" + jsonData.length);\r",
+							"var obj = jsonData[jsonData.length - 1];\r",
+							"if (obj.Name == \"Build your own computer\"){\r",
+							"    console.log(\"The last name in the New Products List is - Build your own computer\");\r",
+							"} else{\r",
+							"    console.log(\"The name is not Build your own computer\")\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/api/PublicProduct/GetNewProducts",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"api",
+						"PublicProduct",
+						"GetNewProducts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Prepare Product Email a Friend",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify if Able to Prepare Product Email a Friend Model- Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify that Firend Email is Null\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.FriendEmail).to.eql(null);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify That Email was not Sent Yet\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.SuccessfullySent).to.eql(false);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify That Message Body is Empty\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.PersonalMessage).to.eql(null);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/api/PublicProduct/GetProductEmailAFriend/1",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"api",
+						"PublicProduct",
+						"GetProductEmailAFriend",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

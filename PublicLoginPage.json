@@ -1,0 +1,171 @@
+{
+	"info": {
+		"_postman_id": "9aab563c-b833-4234-a2f5-b28bb7e69621",
+		"name": "PublicLoginPage",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26554676",
+		"_collection_link": "https://dark-resonance-591950.postman.co/workspace/nopCommerce~bc84a212-ffe9-4443-b100-3ebd088082d3/collection/26554676-9aab563c-b833-4234-a2f5-b28bb7e69621?action=share&source=collection_link&creator=26554676"
+	},
+	"item": [
+		{
+			"name": "GET Ping to check API Server Status",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Pin to check the API server status - Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"var jsonData = pm.response.json();\r",
+							"console.log(\"Login Page Validation. The full version is \" + jsonData.FullVersion);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/api/PublicGeneral/Ping",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"api",
+						"PublicGeneral",
+						"Ping"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Public Guest Token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Public Guest Token - Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.environment.set(\"GuestAccessToken\", pm.response.json().AccessToken);\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "{{APIkey}}",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "X-API-KEY",
+							"type": "string"
+						},
+						{
+							"key": "in",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/api/PublicCustomer/GetGuestToken",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"api",
+						"PublicCustomer",
+						"GetGuestToken"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Login Page View",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Get Login Page - Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Checkout As Guest is False\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.CheckoutAsGuest).to.eql(false);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Email is Empty\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.Email).to.eql(null);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Registration Type is Email Validation\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.RegistrationType).to.eql(\"EmailValidation\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Username is Empty\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.Username).to.eql(null);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Password is Empty\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.Password).to.eql(null);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Remember Me is Unchecked\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.RememberMe).to.eql(false);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Display Captcha is Disabled\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.DisplayCaptcha).to.eql(false);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/api/PublicCustomer/GetLogin",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"api",
+						"PublicCustomer",
+						"GetLogin"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
